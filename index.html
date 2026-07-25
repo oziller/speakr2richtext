@@ -180,6 +180,7 @@
     display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;
   }
   footer a{color:var(--muted);}
+  footer .version{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--muted);font-weight:500;}
 
   /* aria-live toast is visually the button state; keep region offscreen */
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
@@ -214,7 +215,7 @@
             <button id="btn-clear" type="button" title="Vider la zone"><span class="ic" aria-hidden="true">⌫</span> Effacer</button>
           </div>
         </div>
-        <textarea id="input" spellcheck="false" autocomplete="off"
+        <textarea id="input" spellcheck="false" autocomplete="off" autofocus
           aria-label="Markdown source, collé depuis Speakr"
           placeholder="## Titre de la section&#10;- Point principal&#10;- ↳ Sous-point&#10;- ↳↳ Sous-sous-point&#10;&#10;Collez ici (Ctrl+V)…"></textarea>
       </section>
@@ -244,6 +245,8 @@
     <footer>
       <span>Conversion locale · aucun serveur</span>
       <span>Les titres <code style="font-family:var(--mono)">##</code>, le gras, les listes, les liens et les tableaux sont pris en charge.</span>
+      <!-- Version : à incrémenter à chaque mise à jour -->
+      <span class="version">Version 1.0.1 · 25 juillet 2026</span>
     </footer>
   </div>
 
@@ -381,6 +384,7 @@
 
     // ---- Coller (lecture du presse-papier) ----
     document.getElementById("btn-paste").addEventListener("click",function(){
+      input.focus();
       if(navigator.clipboard && navigator.clipboard.readText){
         navigator.clipboard.readText().then(function(text){
           input.value=text;
