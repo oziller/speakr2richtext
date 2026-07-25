@@ -209,6 +209,7 @@
         <div class="panel-head">
           <h2 class="panel-title">Markdown <span class="sub">collé depuis Speakr</span></h2>
           <div class="actions">
+            <button id="btn-paste" type="button" title="Coller depuis le presse-papier"><span class="ic" aria-hidden="true">⇩</span> Coller</button>
             <button id="btn-example" type="button" title="Insérer un exemple"><span class="ic" aria-hidden="true">✎</span> Exemple</button>
             <button id="btn-clear" type="button" title="Vider la zone"><span class="ic" aria-hidden="true">⌫</span> Effacer</button>
           </div>
@@ -375,6 +376,24 @@
         });
       }else{
         flashCopied(legacyCopy());
+      }
+    });
+
+    // ---- Coller (lecture du presse-papier) ----
+    document.getElementById("btn-paste").addEventListener("click",function(){
+      if(navigator.clipboard && navigator.clipboard.readText){
+        navigator.clipboard.readText().then(function(text){
+          input.value=text;
+          render();
+          input.focus();
+          live.textContent="Contenu du presse-papier collé.";
+        }).catch(function(){
+          input.focus();
+          live.textContent="Accès au presse-papier refusé. Cliquez dans la zone puis Ctrl+V.";
+        });
+      }else{
+        input.focus();
+        live.textContent="Collage automatique indisponible ici. Cliquez dans la zone puis Ctrl+V.";
       }
     });
 
